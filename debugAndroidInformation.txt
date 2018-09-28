@@ -1,0 +1,3 @@
+adb logcat -s Unity
+
+C:\Users\Leonid\AppData\Local\Android\Sdk\platform-tools

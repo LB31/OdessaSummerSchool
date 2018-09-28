@@ -1,0 +1,4 @@
+base referer
+rect $class_post_reconstructor.html 121,321 318,663
+rect $class_text_manager.html 227,86 324,178
+rect $class_line_manager.html 349,86 445,178

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>AugmentedRealitySocialMedia: MultiTargetARHandler Klassenreferenz</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.4.5 -->
+<div class="tabs">
+  <ul>
+    <li><a href="index.html"><span>Hauptseite</span></a></li>
+    <li id="current"><a href="annotated.html"><span>Klassen</span></a></li>
+    <li><a href="files.html"><span>Dateien</span></a></li>
+    <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+  </ul></div>
+<div class="tabs">
+  <ul>
+    <li><a href="annotated.html"><span>Auflistung&nbsp;der&nbsp;Klassen</span></a></li>
+    <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+  </ul></div>
+<h1>MultiTargetARHandler Klassenreferenz</h1><!-- doxytag: class="MultiTargetARHandler" --><a href="class_multi_target_a_r_handler-members.html">Aufstellung aller Elemente</a><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Öffentliche Methoden</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="e6f0c2051e43a969e9cc7be0fb52d717"></a><!-- doxytag: member="MultiTargetARHandler::OnInitialized" ref="e6f0c2051e43a969e9cc7be0fb52d717" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#e6f0c2051e43a969e9cc7be0fb52d717">OnInitialized</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Called when UserDefinedTargetBuildingBehaviour has been initialized successfully. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="2cf7f4af6a7d96ab97ffd5a7ec2cc8e0"></a><!-- doxytag: member="MultiTargetARHandler::OnFrameQualityChanged" ref="2cf7f4af6a7d96ab97ffd5a7ec2cc8e0" args="(ImageTargetBuilder.FrameQuality frameQuality)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#2cf7f4af6a7d96ab97ffd5a7ec2cc8e0">OnFrameQualityChanged</a> (ImageTargetBuilder.FrameQuality frameQuality)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Updates the current frame quality. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="3726c6998c261edf513ee82c9e3417a9"></a><!-- doxytag: member="MultiTargetARHandler::DestroyLastTrackable" ref="3726c6998c261edf513ee82c9e3417a9" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#3726c6998c261edf513ee82c9e3417a9">DestroyLastTrackable</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="2609e334cc0f16a5cef3ca9c1cdf7d2a"></a><!-- doxytag: member="MultiTargetARHandler::OnNewTrackableSource" ref="2609e334cc0f16a5cef3ca9c1cdf7d2a" args="(TrackableSource trackableSource)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#2609e334cc0f16a5cef3ca9c1cdf7d2a">OnNewTrackableSource</a> (TrackableSource trackableSource)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Takes a new trackable source and adds it to the dataset This gets called automatically as soon as you 'BuildNewTarget with UserDefinedTargetBuildingBehaviour. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="cf8ff776319a2d3722b950f093af51de"></a><!-- doxytag: member="MultiTargetARHandler::BuildNewTarget" ref="cf8ff776319a2d3722b950f093af51de" args="()" -->
+string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#cf8ff776319a2d3722b950f093af51de">BuildNewTarget</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Instantiates a new user-defined target and is also responsible for dispatching callback to IUserDefinedTargetEventHandler.OnNewTrackableSource. <br></td></tr>
+<tr><td colspan="2"><br><h2>Öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="3e2d3bc6cc14c56671b9e28e273319b1"></a><!-- doxytag: member="MultiTargetARHandler::ImageTargetTemplate" ref="3e2d3bc6cc14c56671b9e28e273319b1" args="" -->
+ImageTargetBehaviour&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#3e2d3bc6cc14c56671b9e28e273319b1">ImageTargetTemplate</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Can be set in the Unity inspector to reference an ImageTargetBehaviour that is instantiated for augmentations of new User-Defined Targets. <br></td></tr>
+<tr><td colspan="2"><br><h2>Propertys</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="26164e513a0a59e292feb8e45de4a2ec"></a><!-- doxytag: member="MultiTargetARHandler::LastTargetIndex" ref="26164e513a0a59e292feb8e45de4a2ec" args="" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#26164e513a0a59e292feb8e45de4a2ec">LastTargetIndex</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="386d232bfdfb9a7f4835aa79da7aa4cc"></a><!-- doxytag: member="MultiTargetARHandler::m_UDT_DataSet" ref="386d232bfdfb9a7f4835aa79da7aa4cc" args="" -->
+DataSet&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_multi_target_a_r_handler.html#386d232bfdfb9a7f4835aa79da7aa4cc">m_UDT_DataSet</a></td></tr>
+
+</table>
+<hr><a name="_details"></a><h2>Ausführliche Beschreibung</h2>
+
+<p>
+
+<p>
+Definiert in Zeile <a class="el" href="_multi_target_a_r_handler_8cs-source.html#l00016">16</a> der Datei <a class="el" href="_multi_target_a_r_handler_8cs-source.html">MultiTargetARHandler.cs</a>.<hr>Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Datei:<ul>
+<li>D:/Programme/UnityProjects/AR_Social_Media_App/Assets/Scripts/<a class="el" href="_multi_target_a_r_handler_8cs-source.html">MultiTargetARHandler.cs</a></ul>
+<hr size="1"><address style="align: right;"><small>Erzeugt am Sat Jul 28 16:17:06 2018 für AugmentedRealitySocialMedia von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.5 </small></address>
+</body>
+</html>

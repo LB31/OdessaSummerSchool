@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>AugmentedRealitySocialMedia: D:/Programme/UnityProjects/AR_Social_Media_App/Assets/Scripts/NativeShare.cs Quellcode</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.4.5 -->
+<div class="tabs">
+  <ul>
+    <li><a href="index.html"><span>Hauptseite</span></a></li>
+    <li><a href="annotated.html"><span>Klassen</span></a></li>
+    <li id="current"><a href="files.html"><span>Dateien</span></a></li>
+    <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+  </ul></div>
+<div class="nav">
+<a class="el" href="dir_D_3A_2F.html">D:</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2F.html">Programme</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2F.html">UnityProjects</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2F.html">AR_Social_Media_App</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2FAssets_2F.html">Assets</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2FAssets_2FScripts_2F.html">Scripts</a></div>
+<h1>NativeShare.cs</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 ï»¿<span class="keyword">using</span> UnityEngine;
+<a name="l00002"></a>00002 <span class="keyword">using</span> System.Collections;
+<a name="l00003"></a>00003 <span class="keyword">using</span> System.IO;
+<a name="l00004"></a>00004 <span class="keyword">using</span> System.Runtime.InteropServices;
+<a name="l00005"></a><a class="code" href="class_native_share.html">00005</a> <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="class_native_share.html">NativeShare</a> : MonoBehaviour {
+<a name="l00006"></a><a class="code" href="class_native_share.html#572d4e421e5e6b9bc11d815e8a027112">00006</a>     <span class="keyword">public</span> string <a class="code" href="class_native_share.html#b5e3374e43f6544852f7751dfc529100">subject</a>, <a class="code" href="class_native_share.html#2bebb19c0295a4e48e79ff35f3b1052b">ShareMessage</a>, <a class="code" href="class_native_share.html#572d4e421e5e6b9bc11d815e8a027112">url</a>;
+<a name="l00007"></a>00007     <span class="keyword">private</span> <span class="keywordtype">bool</span> isProcessing = <span class="keyword">false</span>;
+<a name="l00008"></a><a class="code" href="class_native_share.html#30cb0a9b7fdb9e725c70f62417f168af">00008</a>     <span class="keyword">public</span> string <a class="code" href="class_native_share.html#30cb0a9b7fdb9e725c70f62417f168af">ScreenshotName</a> = <span class="stringliteral">"screenshot.png"</span>;
+<a name="l00009"></a><a class="code" href="class_native_share.html#76993e309d14f14f38e6d428ccfaab0a">00009</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="class_native_share.html#76993e309d14f14f38e6d428ccfaab0a">ShareScreenshotWithText</a>() {
+<a name="l00010"></a>00010         <span class="comment">// Share();</span>
+<a name="l00011"></a>00011     }
+<a name="l00012"></a><a class="code" href="class_native_share.html#859b8af868c6af063ef50a2b22230551">00012</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="class_native_share.html#859b8af868c6af063ef50a2b22230551">Share</a>() {
+<a name="l00013"></a>00013 <span class="preprocessor">#if UNITY_ANDROID</span>
+<a name="l00014"></a>00014 <span class="preprocessor"></span><span class="keywordflow">if</span>(!isProcessing)
+<a name="l00015"></a>00015 StartCoroutine( <a class="code" href="class_native_share.html#33b874c44219caa57b069cd17ff548d5">ShareScreenshot</a>() );
+<a name="l00016"></a>00016 <span class="preprocessor">#elif UNITY_IOS</span>
+<a name="l00017"></a>00017 <span class="preprocessor"></span><span class="keywordflow">if</span>(!isProcessing)
+<a name="l00018"></a>00018 StartCoroutine( CallSocialShareRoutine() );
+<a name="l00019"></a>00019 <span class="preprocessor">#else</span>
+<a name="l00020"></a>00020 <span class="preprocessor"></span>        Debug.Log(<span class="stringliteral">"No sharing set up for this platform."</span>);
+<a name="l00021"></a>00021 <span class="preprocessor">#endif</span>
+<a name="l00022"></a>00022 <span class="preprocessor"></span>    }
+<a name="l00023"></a>00023 <span class="preprocessor">#if UNITY_ANDROID</span>
+<a name="l00024"></a><a class="code" href="class_native_share.html#33b874c44219caa57b069cd17ff548d5">00024</a> <span class="preprocessor"></span><span class="keyword">public</span> IEnumerator <a class="code" href="class_native_share.html#33b874c44219caa57b069cd17ff548d5">ShareScreenshot</a>()
+<a name="l00025"></a>00025 {
+<a name="l00026"></a>00026 isProcessing = <span class="keyword">true</span>;
+<a name="l00027"></a>00027 <span class="comment">// wait for graphics to render</span>
+<a name="l00028"></a>00028 yield <span class="keywordflow">return</span> <span class="keyword">new</span> WaitForEndOfFrame();
+<a name="l00029"></a>00029 string screenShotPath = Application.persistentDataPath + <span class="stringliteral">"/"</span> + <a class="code" href="class_native_share.html#30cb0a9b7fdb9e725c70f62417f168af">ScreenshotName</a>;
+<a name="l00030"></a>00030 ScreenCapture.CaptureScreenshot(<a class="code" href="class_native_share.html#30cb0a9b7fdb9e725c70f62417f168af">ScreenshotName</a>);
+<a name="l00031"></a>00031 yield <span class="keywordflow">return</span> <span class="keyword">new</span> WaitForSeconds(1f);
+<a name="l00032"></a>00032 <span class="keywordflow">if</span>(!Application.isEditor)
+<a name="l00033"></a>00033 {
+<a name="l00034"></a>00034 AndroidJavaClass intentClass = <span class="keyword">new</span> AndroidJavaClass(<span class="stringliteral">"android.content.Intent"</span>);
+<a name="l00035"></a>00035 AndroidJavaObject intentObject = <span class="keyword">new</span> AndroidJavaObject(<span class="stringliteral">"android.content.Intent"</span>);
+<a name="l00036"></a>00036 intentObject.Call&lt;AndroidJavaObject&gt;(<span class="stringliteral">"setAction"</span>, intentClass.GetStatic&lt;string&gt;(<span class="stringliteral">"ACTION_SEND"</span>));
+<a name="l00037"></a>00037 AndroidJavaClass uriClass = <span class="keyword">new</span> AndroidJavaClass(<span class="stringliteral">"android.net.Uri"</span>);
+<a name="l00038"></a>00038 AndroidJavaObject uriObject = uriClass.CallStatic&lt;AndroidJavaObject&gt;(<span class="stringliteral">"parse"</span>, <span class="stringliteral">"file://"</span> + screenShotPath);
+<a name="l00039"></a>00039 intentObject.Call&lt;AndroidJavaObject&gt;(<span class="stringliteral">"putExtra"</span>, intentClass.GetStatic&lt;string&gt;(<span class="stringliteral">"EXTRA_STREAM"</span>), uriObject);
+<a name="l00040"></a>00040 intentObject.Call&lt;AndroidJavaObject&gt;(<span class="stringliteral">"setType"</span>, <span class="stringliteral">"image/png"</span>);
+<a name="l00041"></a>00041 intentObject.Call&lt;AndroidJavaObject&gt;(<span class="stringliteral">"putExtra"</span>, intentClass.GetStatic&lt;string&gt;(<span class="stringliteral">"EXTRA_TEXT"</span>), <a class="code" href="class_native_share.html#2bebb19c0295a4e48e79ff35f3b1052b">ShareMessage</a>);
+<a name="l00042"></a>00042 AndroidJavaClass unity = <span class="keyword">new</span> AndroidJavaClass(<span class="stringliteral">"com.unity3d.player.UnityPlayer"</span>);
+<a name="l00043"></a>00043 AndroidJavaObject currentActivity = unity.GetStatic&lt;AndroidJavaObject&gt;(<span class="stringliteral">"currentActivity"</span>);
+<a name="l00044"></a>00044 AndroidJavaObject jChooser = intentClass.CallStatic&lt;AndroidJavaObject&gt;(<span class="stringliteral">"createChooser"</span>, intentObject, <span class="stringliteral">"YO! I Love Who Lurks!"</span>);
+<a name="l00045"></a>00045 currentActivity.Call(<span class="stringliteral">"startActivity"</span>, jChooser);
+<a name="l00046"></a>00046 }
+<a name="l00047"></a>00047 isProcessing = <span class="keyword">false</span>;
+<a name="l00048"></a>00048 }
+<a name="l00049"></a>00049 <span class="preprocessor">#endif</span>
+<a name="l00050"></a>00050 <span class="preprocessor"></span><span class="preprocessor">#if UNITY_IOS</span>
+<a name="l00051"></a><a class="code" href="struct_native_share_1_1_config_struct.html">00051</a> <span class="preprocessor"></span><span class="keyword">public</span> <span class="keyword">struct </span><a class="code" href="struct_native_share_1_1_config_struct.html">ConfigStruct</a>
+<a name="l00052"></a>00052 {
+<a name="l00053"></a><a class="code" href="struct_native_share_1_1_config_struct.html#d5d3db1765287eef77d7927cc956f50a">00053</a> <span class="keyword">public</span> string title;
+<a name="l00054"></a><a class="code" href="struct_native_share_1_1_config_struct.html#78e731027d8fd50ed642340b7c9a63b3">00054</a> <span class="keyword">public</span> string message;
+<a name="l00055"></a>00055 }
+<a name="l00056"></a>00056 [DllImport (<span class="stringliteral">"__Internal"</span>)] <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">extern</span> <span class="keywordtype">void</span> showAlertMessage(ref <a class="code" href="struct_native_share_1_1_config_struct.html">ConfigStruct</a> conf);
+<a name="l00057"></a><a class="code" href="struct_native_share_1_1_social_sharing_struct.html">00057</a> <span class="keyword">public</span> <span class="keyword">struct </span><a class="code" href="struct_native_share_1_1_social_sharing_struct.html">SocialSharingStruct</a>
+<a name="l00058"></a>00058 {
+<a name="l00059"></a><a class="code" href="struct_native_share_1_1_social_sharing_struct.html#1cb251ec0d568de6a929b520c4aed8d1">00059</a> <span class="keyword">public</span> string text;
+<a name="l00060"></a><a class="code" href="struct_native_share_1_1_social_sharing_struct.html#572d4e421e5e6b9bc11d815e8a027112">00060</a> <span class="keyword">public</span> string url;
+<a name="l00061"></a><a class="code" href="struct_native_share_1_1_social_sharing_struct.html#78805a221a988e79ef3f42d7c5bfd418">00061</a> <span class="keyword">public</span> string image;
+<a name="l00062"></a><a class="code" href="struct_native_share_1_1_social_sharing_struct.html#b5e3374e43f6544852f7751dfc529100">00062</a> <span class="keyword">public</span> string subject;
+<a name="l00063"></a>00063 }
+<a name="l00064"></a>00064 [DllImport (<span class="stringliteral">"__Internal"</span>)] <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">extern</span> <span class="keywordtype">void</span> showSocialSharing(ref <a class="code" href="struct_native_share_1_1_social_sharing_struct.html">SocialSharingStruct</a> conf);
+<a name="l00065"></a><a class="code" href="class_native_share.html#6a8e81389aa1b5cce92dd43caa375ca5">00065</a> <span class="keyword">public</span> <span class="keywordtype">void</span> CallSocialShare(string title, string message)
+<a name="l00066"></a>00066 {
+<a name="l00067"></a>00067 <a class="code" href="struct_native_share_1_1_config_struct.html">ConfigStruct</a> conf = <span class="keyword">new</span> <a class="code" href="struct_native_share_1_1_config_struct.html">ConfigStruct</a>();
+<a name="l00068"></a>00068 conf.<a class="code" href="struct_native_share_1_1_config_struct.html#d5d3db1765287eef77d7927cc956f50a">title</a> = title;
+<a name="l00069"></a>00069 conf.<a class="code" href="struct_native_share_1_1_config_struct.html#78e731027d8fd50ed642340b7c9a63b3">message</a> = message;
+<a name="l00070"></a>00070 showAlertMessage(ref conf);
+<a name="l00071"></a>00071 isProcessing = <span class="keyword">false</span>;
+<a name="l00072"></a>00072 }
+<a name="l00073"></a><a class="code" href="class_native_share.html#9143c4db7502e528474f90cb6bf9cfb9">00073</a> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> CallSocialShareAdvanced(string defaultTxt, string subject, string url, string img)
+<a name="l00074"></a>00074 {
+<a name="l00075"></a>00075 <a class="code" href="struct_native_share_1_1_social_sharing_struct.html">SocialSharingStruct</a> conf = <span class="keyword">new</span> <a class="code" href="struct_native_share_1_1_social_sharing_struct.html">SocialSharingStruct</a>();
+<a name="l00076"></a>00076 conf.<a class="code" href="struct_native_share_1_1_social_sharing_struct.html#1cb251ec0d568de6a929b520c4aed8d1">text</a> = defaultTxt; 
+<a name="l00077"></a>00077 conf.<a class="code" href="struct_native_share_1_1_social_sharing_struct.html#572d4e421e5e6b9bc11d815e8a027112">url</a> = url;
+<a name="l00078"></a>00078 conf.<a class="code" href="struct_native_share_1_1_social_sharing_struct.html#78805a221a988e79ef3f42d7c5bfd418">image</a> = img;
+<a name="l00079"></a>00079 conf.<a class="code" href="struct_native_share_1_1_social_sharing_struct.html#b5e3374e43f6544852f7751dfc529100">subject</a> = subject;
+<a name="l00080"></a>00080 showSocialSharing(ref conf);
+<a name="l00081"></a>00081 }
+<a name="l00082"></a>00082 IEnumerator CallSocialShareRoutine()
+<a name="l00083"></a>00083 {
+<a name="l00084"></a>00084 isProcessing = <span class="keyword">true</span>;
+<a name="l00085"></a>00085 string screenShotPath = Application.persistentDataPath + <span class="stringliteral">"/"</span> + ScreenshotName;
+<a name="l00086"></a>00086 Application.CaptureScreenshot(ScreenshotName);
+<a name="l00087"></a>00087 yield <span class="keywordflow">return</span> <span class="keyword">new</span> WaitForSeconds(1f);
+<a name="l00088"></a>00088     CallSocialShareAdvanced(ShareMessage, subject, url, screenShotPath);
+<a name="l00089"></a>00089 }
+<a name="l00090"></a>00090 <span class="preprocessor">#endif</span>
+<a name="l00091"></a>00091 <span class="preprocessor"></span>}
+<a name="l00092"></a>00092 <span class="comment">//Tags: Unity3d, gamedev, native sharing, ios, android, screenshot</span>
+</pre></div><hr size="1"><address style="align: right;"><small>Erzeugt am Sat Jul 28 16:17:04 2018 für AugmentedRealitySocialMedia von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.5 </small></address>
+</body>
+</html>

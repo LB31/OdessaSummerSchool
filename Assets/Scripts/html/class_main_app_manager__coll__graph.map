@@ -1,0 +1,4 @@
+base referer
+rect $class_screenshot_manager.html 5,5 176,200
+rect $class_multi_target_a_r_handler.html 201,20 389,185
+rect $class_cloud_uploading.html 413,13 552,193

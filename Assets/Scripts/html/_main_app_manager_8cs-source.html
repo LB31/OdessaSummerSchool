@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>AugmentedRealitySocialMedia: D:/Programme/UnityProjects/AR_Social_Media_App/Assets/Scripts/MainAppManager.cs Quellcode</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.4.5 -->
+<div class="tabs">
+  <ul>
+    <li><a href="index.html"><span>Hauptseite</span></a></li>
+    <li><a href="annotated.html"><span>Klassen</span></a></li>
+    <li id="current"><a href="files.html"><span>Dateien</span></a></li>
+    <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+  </ul></div>
+<div class="nav">
+<a class="el" href="dir_D_3A_2F.html">D:</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2F.html">Programme</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2F.html">UnityProjects</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2F.html">AR_Social_Media_App</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2FAssets_2F.html">Assets</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2FAssets_2FScripts_2F.html">Scripts</a></div>
+<h1>MainAppManager.cs</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 ï»¿<span class="keyword">using</span> System.Collections;
+<a name="l00002"></a>00002 <span class="keyword">using</span> System.Collections.Generic;
+<a name="l00003"></a>00003 <span class="keyword">using</span> UnityEngine;
+<a name="l00004"></a>00004 
+<a name="l00005"></a><a class="code" href="class_main_app_manager.html">00005</a> <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="class_main_app_manager.html">MainAppManager</a> : MonoBehaviour {
+<a name="l00006"></a>00006 
+<a name="l00007"></a><a class="code" href="class_main_app_manager.html#93466cfe6c170d5ac16318028bc122db">00007</a>     <span class="keyword">public</span> <span class="keyword">static</span> <a class="code" href="class_main_app_manager.html">MainAppManager</a> <a class="code" href="class_main_app_manager.html#93466cfe6c170d5ac16318028bc122db">mainAppManager</a>;
+<a name="l00008"></a>00008 
+<a name="l00009"></a><a class="code" href="class_main_app_manager.html#29b0c017ebc321cffef72ae29309f1a4">00009</a>     <span class="keyword">public</span> <a class="code" href="class_multi_target_a_r_handler.html">MultiTargetARHandler</a> <a class="code" href="class_main_app_manager.html#29b0c017ebc321cffef72ae29309f1a4">ARHandler</a>;
+<a name="l00010"></a><a class="code" href="class_main_app_manager.html#7fbd0d86d9306671c143d69af37c749e">00010</a>     <span class="keyword">public</span> <a class="code" href="class_screenshot_manager.html">ScreenshotManager</a> <a class="code" href="class_screenshot_manager.html">ScreenshotManager</a>;
+<a name="l00011"></a><a class="code" href="class_main_app_manager.html#cf67ad0198e9405591399763e1167429">00011</a>     <span class="keyword">public</span> GameObject <a class="code" href="class_main_app_manager.html#cf67ad0198e9405591399763e1167429">MainUIElements</a>;
+<a name="l00012"></a><a class="code" href="class_main_app_manager.html#c7b75c3079636cf26cf7d89485f3f154">00012</a>     <span class="keyword">public</span> GameObject <a class="code" href="class_main_app_manager.html#c7b75c3079636cf26cf7d89485f3f154">PostUIElements</a>;
+<a name="l00013"></a><a class="code" href="class_main_app_manager.html#d6bfdfc787bb4ffe80218ed040d33702">00013</a>     <span class="keyword">public</span> GameObject <a class="code" href="class_main_app_manager.html#d6bfdfc787bb4ffe80218ed040d33702">CancelUI</a>;
+<a name="l00014"></a><a class="code" href="class_main_app_manager.html#069eb005db9114d93d3ffc5246dffb62">00014</a>     <span class="keyword">public</span> <a class="code" href="class_cloud_uploading.html">CloudUploading</a> <a class="code" href="class_main_app_manager.html#069eb005db9114d93d3ffc5246dffb62">TargetUploader</a>;
+<a name="l00015"></a>00015 
+<a name="l00017"></a>00017     <span class="keyword">private</span> <span class="keywordtype">bool</span> draw;
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019     <span class="keyword">private</span> GameObject target = null;
+<a name="l00020"></a>00020 
+<a name="l00022"></a>00022     <span class="keyword">private</span> <span class="keywordtype">void</span> Awake () {
+<a name="l00023"></a>00023                 <span class="keywordflow">if</span>(<a class="code" href="class_main_app_manager.html#93466cfe6c170d5ac16318028bc122db">mainAppManager</a> == null)
+<a name="l00024"></a>00024         {
+<a name="l00025"></a>00025             <a class="code" href="class_main_app_manager.html#93466cfe6c170d5ac16318028bc122db">mainAppManager</a> = <span class="keyword">this</span>;
+<a name="l00026"></a>00026             DontDestroyOnLoad(gameObject);
+<a name="l00027"></a>00027         }
+<a name="l00028"></a>00028         <span class="keywordflow">else</span>
+<a name="l00029"></a>00029         {
+<a name="l00030"></a>00030             Destroy(gameObject);
+<a name="l00031"></a>00031         }
+<a name="l00032"></a>00032         }
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 
+<a name="l00039"></a><a class="code" href="class_main_app_manager.html#90094f6fd1c5d4730812e5302e964b73">00039</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> PushCreateButton(<span class="keywordtype">bool</span> draw)
+<a name="l00040"></a>00040     {
+<a name="l00041"></a>00041         <span class="keywordflow">if</span> (!<a class="code" href="class_multi_target_event_handler.html">MultiTargetEventHandler</a>.ObjectDetected &amp;&amp; !<a class="code" href="class_post_reconstructor.html">PostReconstructor</a>.ObjectDetected)
+<a name="l00042"></a>00042         {
+<a name="l00043"></a>00043             string targetName = ARHandler.BuildNewTarget();
+<a name="l00044"></a>00044             <span class="keywordflow">if</span> (targetName == null) <span class="keywordflow">return</span>;
+<a name="l00045"></a>00045 
+<a name="l00047"></a>00047             <a class="code" href="class_screenshot_manager.html">ScreenshotManager</a>.TakeAShot();
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049             StartCoroutine(FindTarget(targetName));
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051             <span class="keyword">this</span>.draw = draw;
+<a name="l00052"></a>00052         }
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055     }
+<a name="l00056"></a>00056 
+<a name="l00062"></a>00062     <span class="keyword">private</span> IEnumerator FindTarget(string targetName)
+<a name="l00063"></a>00063     {
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065         <span class="keywordflow">while</span> (target == null)
+<a name="l00066"></a>00066         {
+<a name="l00067"></a>00067             target = GameObject.Find(targetName);
+<a name="l00068"></a>00068             Debug.Log(<span class="stringliteral">"searching "</span> + targetName);
+<a name="l00069"></a>00069             yield <span class="keywordflow">return</span> null;
+<a name="l00070"></a>00070         }
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072         ProcessPostRequest();
+<a name="l00073"></a>00073     }
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075     <span class="keyword">private</span> <span class="keywordtype">void</span> ProcessPostRequest()
+<a name="l00076"></a>00076     {
+<a name="l00077"></a>00077         Debug.Log(<span class="stringliteral">"ProcessPostRequest()"</span>);
+<a name="l00078"></a>00078         MainUIElements.SetActive(<span class="keyword">false</span>);
+<a name="l00079"></a>00079         PostUIElements.SetActive(<span class="keyword">true</span>);
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081         <span class="keywordflow">if</span> (draw)
+<a name="l00082"></a>00082         {
+<a name="l00083"></a>00083             target.GetComponentInChildren(typeof(Drawer), <span class="keyword">true</span>).gameObject.SetActive(<span class="keyword">true</span>);
+<a name="l00084"></a>00084         }
+<a name="l00085"></a>00085         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!draw)
+<a name="l00086"></a>00086         {
+<a name="l00087"></a>00087             GameObject textController = target.GetComponentInChildren(typeof(Texter), <span class="keyword">true</span>).gameObject;
+<a name="l00088"></a>00088             textController.SetActive(<span class="keyword">true</span>);
+<a name="l00090"></a>00090             textController.GetComponent&lt;<a class="code" href="class_key_board_controller.html">KeyBoardController</a>&gt;().textPostButton = <span class="keyword">true</span>;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092         }
+<a name="l00093"></a>00093         
+<a name="l00094"></a>00094     }
+<a name="l00095"></a>00095 
+<a name="l00096"></a><a class="code" href="class_main_app_manager.html#9853dfbe672b1a7b1ec7f2d17d24b50c">00096</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> PushPostButton()
+<a name="l00097"></a>00097     {
+<a name="l00098"></a>00098             Texture2D takenScreenshot = <a class="code" href="class_screenshot_manager.html">ScreenshotManager</a>.GetScreenshotImage();
+<a name="l00099"></a>00099             TargetUploader.texture = takenScreenshot;
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101             MainUIElements.SetActive(<span class="keyword">true</span>);
+<a name="l00102"></a>00102             PostUIElements.SetActive(<span class="keyword">false</span>);
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104             <span class="keywordflow">if</span> (draw)
+<a name="l00105"></a>00105             {
+<a name="l00107"></a>00107                 target.GetComponentInChildren&lt;<a class="code" href="class_swipe_trail.html">SwipeTrail</a>&gt;().enabled = <span class="keyword">false</span>;
+<a name="l00108"></a>00108                 target.GetComponentInChildren&lt;ColorPicker&gt;().gameObject.SetActive(<span class="keyword">false</span>);
+<a name="l00109"></a>00109                 TargetUploader.metadataStr = target.GetComponentInChildren&lt;<a class="code" href="class_swipe_trail.html">SwipeTrail</a>&gt;().getJsonGraffiti();
+<a name="l00110"></a>00110             }
+<a name="l00111"></a>00111             <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!draw)
+<a name="l00112"></a>00112             {
+<a name="l00113"></a>00113                 TargetUploader.metadataStr = target.GetComponentInChildren&lt;<a class="code" href="class_key_board_controller.html">KeyBoardController</a>&gt;().getJsonGraffiti();
+<a name="l00114"></a>00114                 target.GetComponentInChildren&lt;<a class="code" href="class_key_board_controller.html">KeyBoardController</a>&gt;().enabled = <span class="keyword">false</span>;
+<a name="l00115"></a>00115         }
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117             TargetUploader.CallPostTarget();
+<a name="l00118"></a>00118             <a class="code" href="class_screenshot_manager.html">ScreenshotManager</a>.DeleteLastScreenshot();
+<a name="l00119"></a>00119             target = null;
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121     }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 
+<a name="l00124"></a><a class="code" href="class_main_app_manager.html#f7d5d044f16794dd51f75ce01337c57a">00124</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> PushCancelButton()
+<a name="l00125"></a>00125     {
+<a name="l00126"></a>00126         CancelUI.SetActive(<span class="keyword">true</span>);
+<a name="l00127"></a>00127     }
+<a name="l00128"></a>00128 
+<a name="l00129"></a><a class="code" href="class_main_app_manager.html#bcc5dbcf3e94130578f975dee94296aa">00129</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> PushKeepButton()
+<a name="l00130"></a>00130     {
+<a name="l00131"></a>00131             CancelUI.SetActive(<span class="keyword">false</span>);
+<a name="l00132"></a>00132     }
+<a name="l00133"></a>00133 
+<a name="l00134"></a><a class="code" href="class_main_app_manager.html#0b51a603188533d0e1e50187ffba7011">00134</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> PushDiscardButton()
+<a name="l00135"></a>00135     {
+<a name="l00136"></a>00136         CancelUI.SetActive(<span class="keyword">false</span>);
+<a name="l00137"></a>00137         MainUIElements.SetActive(<span class="keyword">true</span>);
+<a name="l00138"></a>00138         PostUIElements.SetActive(<span class="keyword">false</span>);
+<a name="l00139"></a>00139         ARHandler.DestroyLastTrackable();
+<a name="l00140"></a>00140         Destroy(target);
+<a name="l00141"></a>00141         target = null;
+<a name="l00142"></a>00142         <a class="code" href="class_screenshot_manager.html">ScreenshotManager</a>.DeleteLastScreenshot();
+<a name="l00143"></a>00143     }
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 }
+</pre></div><hr size="1"><address style="align: right;"><small>Erzeugt am Sat Jul 28 16:17:04 2018 für AugmentedRealitySocialMedia von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.5 </small></address>
+</body>
+</html>

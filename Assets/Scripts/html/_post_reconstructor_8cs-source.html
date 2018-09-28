@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>AugmentedRealitySocialMedia: D:/Programme/UnityProjects/AR_Social_Media_App/Assets/Scripts/PostReconstructor.cs Quellcode</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.4.5 -->
+<div class="tabs">
+  <ul>
+    <li><a href="index.html"><span>Hauptseite</span></a></li>
+    <li><a href="annotated.html"><span>Klassen</span></a></li>
+    <li id="current"><a href="files.html"><span>Dateien</span></a></li>
+    <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+  </ul></div>
+<div class="nav">
+<a class="el" href="dir_D_3A_2F.html">D:</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2F.html">Programme</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2F.html">UnityProjects</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2F.html">AR_Social_Media_App</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2FAssets_2F.html">Assets</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_D_3A_2FProgramme_2FUnityProjects_2FAR_5FSocial_5FMedia_5FApp_2FAssets_2FScripts_2F.html">Scripts</a></div>
+<h1>PostReconstructor.cs</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 ï»¿<span class="keyword">using</span> System.Collections;
+<a name="l00002"></a>00002 <span class="keyword">using</span> System.Collections.Generic;
+<a name="l00003"></a>00003 <span class="keyword">using</span> UnityEngine;
+<a name="l00004"></a>00004 <span class="keyword">using</span> UnityEngine.UI;
+<a name="l00005"></a>00005 <span class="keyword">using</span> Vuforia;
+<a name="l00006"></a>00006 
+<a name="l00007"></a><a class="code" href="class_post_reconstructor.html">00007</a> <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="class_post_reconstructor.html">PostReconstructor</a> : MonoBehaviour, ITrackableEventHandler {
+<a name="l00008"></a>00008     <span class="keyword">private</span> <a class="code" href="class_line_manager.html">LineManager</a> lineManager = null;
+<a name="l00009"></a>00009     <span class="keyword">private</span> <a class="code" href="class_text_manager.html">TextManager</a> textManager = null;
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011     <span class="keyword">private</span> TrackableBehaviour mTrackableBehaviour;
+<a name="l00012"></a><a class="code" href="class_post_reconstructor.html#2a25d971d2a181333f9af4b20431992a">00012</a>     <span class="keyword">public</span> <a class="code" href="class_simple_cloud_handler.html">SimpleCloudHandler</a> <a class="code" href="class_post_reconstructor.html#2a25d971d2a181333f9af4b20431992a">CloudHandler</a>;
+<a name="l00013"></a><a class="code" href="class_post_reconstructor.html#efcee1466130ab30be44be5ae95a2b28">00013</a>     <span class="keyword">public</span> Material <a class="code" href="class_post_reconstructor.html#efcee1466130ab30be44be5ae95a2b28">TrailMaterial</a>;
+<a name="l00014"></a><a class="code" href="class_post_reconstructor.html#e1c006e5623b6c992641c95fb899849c">00014</a>     <span class="keyword">public</span> GameObject <a class="code" href="class_post_reconstructor.html#e1c006e5623b6c992641c95fb899849c">PostParent</a>;
+<a name="l00015"></a><a class="code" href="class_post_reconstructor.html#1cb251ec0d568de6a929b520c4aed8d1">00015</a>     <span class="keyword">public</span> Text <a class="code" href="class_post_reconstructor.html#1cb251ec0d568de6a929b520c4aed8d1">text</a>;
+<a name="l00016"></a><a class="code" href="class_post_reconstructor.html#9b3e01de311c462b408f508547e62820">00016</a>     <span class="keyword">public</span> GameObject <a class="code" href="class_post_reconstructor.html#9b3e01de311c462b408f508547e62820">textRetracer</a>;
+<a name="l00017"></a><a class="code" href="class_post_reconstructor.html#f1e5d7a5fe13498abbdeb0f1f19136a8">00017</a>     <span class="keyword">public</span> GameObject <a class="code" href="class_post_reconstructor.html#f1e5d7a5fe13498abbdeb0f1f19136a8">panel</a>;
+<a name="l00018"></a>00018 
+<a name="l00019"></a><a class="code" href="class_post_reconstructor.html#6dea0c33709f9b396e5340706eb04389">00019</a>     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="class_post_reconstructor.html#6dea0c33709f9b396e5340706eb04389">ObjectDetected</a>;
+<a name="l00020"></a>00020 
+<a name="l00021"></a><a class="code" href="class_post_reconstructor.html#60429a56340c228b37370339f7dd0791">00021</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="class_post_reconstructor.html#60429a56340c228b37370339f7dd0791">setLineManager</a>(<a class="code" href="class_line_manager.html">LineManager</a> lm)
+<a name="l00022"></a>00022     {
+<a name="l00023"></a>00023         lineManager = lm;
+<a name="l00024"></a>00024     }
+<a name="l00025"></a>00025 
+<a name="l00026"></a><a class="code" href="class_post_reconstructor.html#13d40ff6f79a648d2b1858de5ec27fbd">00026</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="class_post_reconstructor.html#13d40ff6f79a648d2b1858de5ec27fbd">setTextManager</a>(<a class="code" href="class_text_manager.html">TextManager</a> tm)
+<a name="l00027"></a>00027     {
+<a name="l00028"></a>00028         textManager = tm;
+<a name="l00029"></a>00029     }
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032     <span class="keywordtype">void</span> Start () {
+<a name="l00033"></a>00033         Screen.autorotateToPortrait = <span class="keyword">true</span>;
+<a name="l00034"></a>00034        
+<a name="l00035"></a>00035         mTrackableBehaviour = GetComponent&lt;TrackableBehaviour&gt;();
+<a name="l00036"></a>00036         <span class="keywordflow">if</span> (mTrackableBehaviour)
+<a name="l00037"></a>00037             mTrackableBehaviour.RegisterTrackableEventHandler(<span class="keyword">this</span>);
+<a name="l00038"></a>00038     }
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040     <span class="keywordtype">void</span> ShowDownloadedPost()
+<a name="l00041"></a>00041     {
+<a name="l00042"></a>00042         <span class="keywordflow">if</span> (lineManager != null)
+<a name="l00043"></a>00043         {
+<a name="l00044"></a>00044             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; lineManager.<a class="code" href="class_line_manager.html#d7ed5d2adfe547ed10385dcd6b0dd997">AllLines</a>.Count; i++)
+<a name="l00045"></a>00045             {
+<a name="l00046"></a>00046                 CreateLineObject(i);
+<a name="l00047"></a>00047             }
+<a name="l00048"></a>00048         }
+<a name="l00049"></a>00049         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(textManager != null)
+<a name="l00050"></a>00050         {
+<a name="l00051"></a>00051             <a class="code" href="class_post_reconstructor.html#9b3e01de311c462b408f508547e62820">textRetracer</a>.SetActive(<span class="keyword">true</span>);
+<a name="l00052"></a>00052             <a class="code" href="class_post_reconstructor.html#1cb251ec0d568de6a929b520c4aed8d1">text</a>.text = textManager.<a class="code" href="class_text_manager.html#03d947a2158373c3b9d74325850cb8b9">Post</a>;
+<a name="l00053"></a>00053             <span class="comment">// Sets the text background panel to its size</span>
+<a name="l00054"></a>00054             <span class="keywordtype">float</span> width = <a class="code" href="class_post_reconstructor.html#1cb251ec0d568de6a929b520c4aed8d1">text</a>.gameObject.GetComponent&lt;RectTransform&gt;().rect.width;
+<a name="l00055"></a>00055             <span class="keywordtype">float</span> height = <a class="code" href="class_post_reconstructor.html#1cb251ec0d568de6a929b520c4aed8d1">text</a>.gameObject.GetComponent&lt;RectTransform&gt;().rect.height;
+<a name="l00056"></a>00056             <a class="code" href="class_post_reconstructor.html#f1e5d7a5fe13498abbdeb0f1f19136a8">panel</a>.GetComponent&lt;RectTransform&gt;().sizeDelta = <span class="keyword">new</span> Vector2(width, height);
+<a name="l00057"></a>00057         }
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061     }
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065     <span class="keywordtype">void</span> CreateLineObject(<span class="keywordtype">int</span> lineCounter)
+<a name="l00066"></a>00066     {
+<a name="l00067"></a>00067         GameObject newLine = <span class="keyword">new</span> GameObject();
+<a name="l00068"></a>00068        
+<a name="l00069"></a>00069         newLine.transform.parent = PostParent.transform;
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071         newLine.name = <span class="stringliteral">"Line segment "</span> + lineCounter;
+<a name="l00072"></a>00072         newLine.AddComponent&lt;LineRenderer&gt;();
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074         RetraceLine(newLine.GetComponent&lt;LineRenderer&gt;(), lineCounter);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076     }
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078     <span class="keywordtype">void</span> RetraceLine(LineRenderer line, <span class="keywordtype">int</span> lineNumber)
+<a name="l00079"></a>00079     {
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081         <a class="code" href="class_line.html">Line</a> currentLine = lineManager.AllLines[lineNumber];
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083         <span class="comment">// Set the width of the Line Renderer</span>
+<a name="l00084"></a>00084         line.SetWidth(0.01f, 0.01f);
+<a name="l00085"></a>00085         <span class="comment">// Set the number of vertex fo the Line Renderer</span>
+<a name="l00086"></a>00086         line.positionCount = currentLine.<a class="code" href="class_line.html#3160eb21973806e4291c3979d4aa242e">Positions</a>.Length;
+<a name="l00087"></a>00087         line.material = TrailMaterial;
+<a name="l00088"></a>00088         <span class="comment">//line.useWorldSpace = false;</span>
+<a name="l00089"></a>00089         SetTrailColour(line, currentLine.<a class="code" href="class_line.html#296cc9a02b167493f6ff885c48ca71ff">colour</a>);
+<a name="l00090"></a>00090         line.SetPositions(currentLine.<a class="code" href="class_line.html#3160eb21973806e4291c3979d4aa242e">Positions</a>);
+<a name="l00091"></a>00091     }
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093     <span class="keywordtype">void</span> SetTrailColour(LineRenderer lineRenderer, Vector3 colour)
+<a name="l00094"></a>00094     {
+<a name="l00095"></a>00095         <span class="keywordtype">float</span> r = colour.x;
+<a name="l00096"></a>00096         <span class="keywordtype">float</span> g = colour.y;
+<a name="l00097"></a>00097         <span class="keywordtype">float</span> b = colour.z;
+<a name="l00098"></a>00098         lineRenderer.startColor = <span class="keyword">new</span> Color(r, g, b);
+<a name="l00099"></a>00099         lineRenderer.endColor = <span class="keyword">new</span> Color(r, g, b);
+<a name="l00100"></a>00100     }
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 
+<a name="l00109"></a><a class="code" href="class_post_reconstructor.html#5f252a725e6532f75d3a819051b58d8e">00109</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> OnTrackableStateChanged(
+<a name="l00110"></a>00110         TrackableBehaviour.Status previousStatus,
+<a name="l00111"></a>00111         TrackableBehaviour.Status newStatus)
+<a name="l00112"></a>00112     {
+<a name="l00113"></a>00113         <span class="keywordflow">if</span> (newStatus == TrackableBehaviour.Status.DETECTED ||
+<a name="l00114"></a>00114             newStatus == TrackableBehaviour.Status.TRACKED ||
+<a name="l00115"></a>00115             newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
+<a name="l00116"></a>00116         {
+<a name="l00117"></a>00117             Debug.Log(<span class="stringliteral">"Trackable "</span> + mTrackableBehaviour.TrackableName + <span class="stringliteral">" found"</span>);
+<a name="l00118"></a>00118             OnTrackingFound();
+<a name="l00119"></a>00119         }
+<a name="l00120"></a>00120         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (previousStatus == TrackableBehaviour.Status.TRACKED &amp;&amp;
+<a name="l00121"></a>00121                  newStatus == TrackableBehaviour.Status.NO_POSE)
+<a name="l00122"></a>00122         {
+<a name="l00123"></a>00123             Debug.Log(<span class="stringliteral">"Trackable "</span> + mTrackableBehaviour.TrackableName + <span class="stringliteral">" lost"</span>);
+<a name="l00124"></a>00124             OnTrackingLost();
+<a name="l00125"></a>00125         }
+<a name="l00126"></a>00126         <span class="keywordflow">else</span>
+<a name="l00127"></a>00127         {
+<a name="l00128"></a>00128             <span class="comment">// For combo of previousStatus=UNKNOWN + newStatus=UNKNOWN|NOT_FOUND</span>
+<a name="l00129"></a>00129             <span class="comment">// Vuforia is starting, but tracking has not been lost or found yet</span>
+<a name="l00130"></a>00130             <span class="comment">// Call OnTrackingLost() to hide the augmentations</span>
+<a name="l00131"></a>00131             OnTrackingLost();
+<a name="l00132"></a>00132         }
+<a name="l00133"></a>00133     }
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136     <span class="keyword">private</span> <span class="keywordtype">void</span> OnTrackingFound()
+<a name="l00137"></a>00137     {
+<a name="l00138"></a>00138         ShowDownloadedPost();
+<a name="l00139"></a>00139         ObjectDetected = <span class="keyword">true</span>;
+<a name="l00140"></a>00140     }
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143     <span class="keyword">private</span> <span class="keywordtype">void</span> OnTrackingLost()
+<a name="l00144"></a>00144     {
+<a name="l00145"></a>00145         <span class="comment">// Activates the cloud scanning again</span>
+<a name="l00146"></a>00146         CloudHandler.mCloudRecoBehaviour.CloudRecoEnabled = <span class="keyword">true</span>;
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148         foreach (Transform child in PostParent.transform)
+<a name="l00149"></a>00149         {
+<a name="l00150"></a>00150             GameObject.Destroy(child.gameObject);
+<a name="l00151"></a>00151         }
+<a name="l00152"></a>00152         lineManager = null;
+<a name="l00153"></a>00153         textManager = null;
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156         textRetracer.SetActive(<span class="keyword">false</span>);
+<a name="l00157"></a>00157         ObjectDetected = <span class="keyword">false</span>;
+<a name="l00158"></a>00158     }
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 
+<a name="l00161"></a>00161 }
+</pre></div><hr size="1"><address style="align: right;"><small>Erzeugt am Sat Jul 28 16:17:04 2018 für AugmentedRealitySocialMedia von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.5 </small></address>
+</body>
+</html>
